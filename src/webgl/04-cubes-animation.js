@@ -91,7 +91,7 @@ const sketch = ({ context, width, height }) => {
   const geometry = new THREE.BoxGeometry(1, 1, 1);
 
   // The # of cubes to create
-  const chunks = 50;
+  const chunks = 200;
 
   // Create each cube and return a THREE.Mesh
   const meshes = Array.from(new Array(chunks)).map(() => {
@@ -120,6 +120,7 @@ const sketch = ({ context, width, height }) => {
   // Then add the group to the scene
   scene.add(container);
 
+  scene.add(new THREE.AmbientLight(random.pick(palette), 0.75));
   // Add a harsh light to the scene
   const light = new THREE.DirectionalLight('white', 1);
   light.position.set(0, 0, 2);

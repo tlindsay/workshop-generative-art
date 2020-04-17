@@ -1,3 +1,4 @@
+/* global THREE */
 const canvasSketch = require('canvas-sketch');
 const convexHull = require('convex-hull');
 const random = require('canvas-sketch-util/random');
@@ -45,15 +46,15 @@ const sketch = ({ context }) => {
     uniform float time;
 
     #pragma glslify: noise = require('glsl-noise/simplex/4d');
- 
+
     void main () {
       vUv = uv;
 
       vec3 transformed = position.xyz;
 
       float offset = 0.0;
-      offset += 0.5 * noise(vec4(position.xyz * 0.5, time * 0.25));
-      offset += 0.25 * noise(vec4(position.xyz * 1.5, time * 0.25));
+      offset += 0.5 * smoothstep(noise(vec4(position.xyz * 0.5, time * 1.25)));
+      // offset += 0.25 * noise(vec4(position.xyz * 1.5, time * 1.25));
 
       transformed += normal * offset;
 
@@ -74,7 +75,7 @@ const sketch = ({ context }) => {
     }
   `);
 
-  const geometry = new THREE.SphereGeometry(1, 64, 64);
+  const geometry = new THREE.IcosahedronGeometry(1);
 
   const mesh = new THREE.Mesh(
     geometry,
